@@ -1,0 +1,118 @@
+We are connected to the postgres database
+=== RUN   TestFindAllDives
+2021/12/04 12:16:53 Successfully refreshed tables
+
+[35m(/Users/terje/Projects/priv/divearchive/dive-arch/servers/golang-server/api/models/Dive.go:62)[0m 
+[33m[2021-12-04 12:16:53][0m  [36;1m[1.05ms][0m  SELECT * FROM "dives"   LIMIT 1000  
+[36;31m[1 rows affected or returned ][0m 
+
+[35m(/Users/terje/Projects/priv/divearchive/dive-arch/servers/golang-server/api/models/Dive.go:68)[0m 
+[33m[2021-12-04 12:16:53][0m  [36;1m[2.07ms][0m  SELECT * FROM "users"  WHERE (id = 1) LIMIT 1  
+[36;31m[1 rows affected or returned ][0m 
+dive_model_test.go:27 1 does not equal 2
+--- FAIL: TestFindAllDives (0.13s)
+=== RUN   TestSaveDive
+2021/12/04 12:16:53 Successfully refreshed tables
+2021/12/04 12:16:53 Successfully refreshed table
+
+[35m(/Users/terje/Projects/priv/divearchive/dive-arch/servers/golang-server/api/models/Dive.go:47)[0m 
+[33m[2021-12-04 12:16:53][0m  [36;1m[2.39ms][0m  INSERT INTO "dives" ("id","title","diver_id","dive_code","dive_name","scores","movie_location","created_at","updated_at") VALUES (1,'This is the title',1,'','','','','2021-12-04 12:16:53','2021-12-04 12:16:53') RETURNING "dives"."id"  
+[36;31m[1 rows affected or returned ][0m 
+
+[35m(/Users/terje/Projects/priv/divearchive/dive-arch/servers/golang-server/api/models/Dive.go:52)[0m 
+[33m[2021-12-04 12:16:53][0m  [36;1m[2.03ms][0m  SELECT * FROM "users"  WHERE (id = 1) LIMIT 1  
+[36;31m[1 rows affected or returned ][0m 
+--- PASS: TestSaveDive (0.18s)
+=== RUN   TestGetDiveByID
+2021/12/04 12:16:53 Successfully refreshed tables
+2021/12/04 12:16:53 Successfully refreshed tables
+
+[35m(/Users/terje/Projects/priv/divearchive/dive-arch/servers/golang-server/api/models/Dive.go:78)[0m 
+[33m[2021-12-04 12:16:53][0m  [36;1m[1.99ms][0m  SELECT * FROM "dives"  WHERE (id = 1) LIMIT 1  
+[36;31m[1 rows affected or returned ][0m 
+
+[35m(/Users/terje/Projects/priv/divearchive/dive-arch/servers/golang-server/api/models/Dive.go:83)[0m 
+[33m[2021-12-04 12:16:53][0m  [36;1m[2.04ms][0m  SELECT * FROM "users"  WHERE (id = 1) LIMIT 1  
+[36;31m[1 rows affected or returned ][0m 
+--- PASS: TestGetDiveByID (0.18s)
+=== RUN   TestUpdateADive
+2021/12/04 12:16:53 Successfully refreshed tables
+2021/12/04 12:16:54 Successfully refreshed tables
+
+[35m(/Users/terje/Projects/priv/divearchive/dive-arch/servers/golang-server/api/models/Dive.go:92)[0m 
+[33m[2021-12-04 12:16:54][0m  [36;1m[2.29ms][0m  UPDATE "dives" SET "title" = 'modiUpdate', "updated_at" = '2021-12-04 12:16:54'  WHERE (id = 1)  
+[36;31m[1 rows affected or returned ][0m 
+
+[35m(/Users/terje/Projects/priv/divearchive/dive-arch/servers/golang-server/api/models/Dive.go:97)[0m 
+[33m[2021-12-04 12:16:54][0m  [36;1m[2.42ms][0m  SELECT * FROM "users"  WHERE (id = 1) LIMIT 1  
+[36;31m[1 rows affected or returned ][0m 
+--- PASS: TestUpdateADive (0.22s)
+=== RUN   TestDeleteADive
+2021/12/04 12:16:54 Successfully refreshed tables
+2021/12/04 12:16:54 Successfully refreshed tables
+
+[35m(/Users/terje/Projects/priv/divearchive/dive-arch/servers/golang-server/api/models/Dive.go:107)[0m 
+[33m[2021-12-04 12:16:54][0m  [36;1m[2.03ms][0m  SELECT * FROM "dives"  WHERE (id = 1 and diver_id = 1) LIMIT 1  
+[36;31m[1 rows affected or returned ][0m 
+
+[35m(/Users/terje/Projects/priv/divearchive/dive-arch/servers/golang-server/api/models/Dive.go:107)[0m 
+[33m[2021-12-04 12:16:54][0m  [36;1m[1.86ms][0m  DELETE FROM "dives"  WHERE (id = 1 and diver_id = 1)  
+[36;31m[1 rows affected or returned ][0m 
+--- PASS: TestDeleteADive (0.19s)
+=== RUN   TestFindAllUsers
+2021/12/04 12:16:54 Successfully refreshed table
+
+[35m(/Users/terje/Projects/priv/divearchive/dive-arch/servers/golang-server/api/models/User.go:110)[0m 
+[33m[2021-12-04 12:16:54][0m  [36;1m[1.03ms][0m  SELECT * FROM "users"   LIMIT 1000  
+[36;31m[2 rows affected or returned ][0m 
+--- PASS: TestFindAllUsers (0.19s)
+=== RUN   TestSaveUser
+2021/12/04 12:16:54 Successfully refreshed table
+
+[35m(/Users/terje/Projects/priv/divearchive/dive-arch/servers/golang-server/api/models/User.go:101)[0m 
+[33m[2021-12-04 12:16:54][0m  [36;1m[3.71ms][0m  INSERT INTO "users" ("id","email","password","first_name","last_name","dive_club_id","created_at","updated_at") VALUES (1,'test@gmail.com','/U/YD3.RB8OMSRuhYjd1g9dDZDRVRIugvcfGCm','','',0,'2021-12-04 12:16:54','2021-12-04 12:16:54') RETURNING "users"."id"  
+[36;31m[1 rows affected or returned ][0m 
+--- PASS: TestSaveUser (0.12s)
+=== RUN   TestGetUserByID
+2021/12/04 12:16:54 Successfully refreshed table
+2021/12/04 12:16:54 Successfully refreshed table
+
+[35m(/Users/terje/Projects/priv/divearchive/dive-arch/servers/golang-server/api/models/User.go:118)[0m 
+[33m[2021-12-04 12:16:54][0m  [36;1m[2.09ms][0m  SELECT * FROM "users"  WHERE (id = 1) LIMIT 1  
+[36;31m[1 rows affected or returned ][0m 
+
+[35m(/Users/terje/Projects/priv/divearchive/dive-arch/servers/golang-server/api/models/User.go:125)[0m 
+[33m[2021-12-04 12:16:54][0m  [36;1m[2.19ms][0m  SELECT * FROM "dive_clubs"  WHERE (id = 0) LIMIT 1  
+[36;31m[0 rows affected or returned ][0m 
+--- PASS: TestGetUserByID (0.19s)
+=== RUN   TestUpdateAUser
+2021/12/04 12:16:54 Successfully refreshed table
+2021/12/04 12:16:54 Successfully refreshed table
+
+[35m(/Users/terje/Projects/priv/divearchive/dive-arch/servers/golang-server/api/models/User.go:136)[0m 
+[33m[2021-12-04 12:16:55][0m  [36;1m[3.42ms][0m  SELECT * FROM "users"  WHERE (id = 1) LIMIT 1  
+[36;31m[1 rows affected or returned ][0m 
+
+[35m(/Users/terje/Projects/priv/divearchive/dive-arch/servers/golang-server/api/models/User.go:136)[0m 
+[33m[2021-12-04 12:16:55][0m  [36;1m[2.38ms][0m  UPDATE "users" SET "email" = 'modiupdate@gmail.com', "first_name" = '', "last_name" = '', "password" = '.74u7uLXu6AwA.E/el2', "updated_at" = '2021-12-04 12:16:55'  WHERE "users"."id" = 1 AND ((id = 1))  
+[36;31m[1 rows affected or returned ][0m 
+
+[35m(/Users/terje/Projects/priv/divearchive/dive-arch/servers/golang-server/api/models/User.go:149)[0m 
+[33m[2021-12-04 12:16:55][0m  [36;1m[2.09ms][0m  SELECT * FROM "users"  WHERE "users"."id" = 1 AND ((id = 1) AND (id = 1)) LIMIT 1  
+[36;31m[1 rows affected or returned ][0m 
+--- PASS: TestUpdateAUser (0.24s)
+=== RUN   TestDeleteAUser
+2021/12/04 12:16:55 Successfully refreshed table
+2021/12/04 12:16:55 Successfully refreshed table
+
+[35m(/Users/terje/Projects/priv/divearchive/dive-arch/servers/golang-server/api/models/User.go:157)[0m 
+[33m[2021-12-04 12:16:55][0m  [36;1m[2.40ms][0m  SELECT * FROM "users"  WHERE (id = 1) LIMIT 1  
+[36;31m[1 rows affected or returned ][0m 
+
+[35m(/Users/terje/Projects/priv/divearchive/dive-arch/servers/golang-server/api/models/User.go:157)[0m 
+[33m[2021-12-04 12:16:55][0m  [36;1m[1.87ms][0m  DELETE FROM "users"  WHERE (id = 1)  
+[36;31m[1 rows affected or returned ][0m 
+--- PASS: TestDeleteAUser (0.19s)
+FAIL
+exit status 1
+FAIL	github.com/tabinnorway/golang-server/tests/modeltests	1.981s
