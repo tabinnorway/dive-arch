@@ -55,7 +55,7 @@ func (dc *Location) SaveLocation(db *gorm.DB) (*Location, error) {
 
 func (dc *Location) FindAllLocations(db *gorm.DB) (*[]Location, error) {
 	ret := []Location{}
-	err := db.Debug().Model(&Location{}).Limit(1000).Find(&ret).Error
+	err := db.Model(&Location{}).Limit(1000).Find(&ret).Error
 	if err != nil {
 		return &[]Location{}, err
 	}
@@ -63,7 +63,7 @@ func (dc *Location) FindAllLocations(db *gorm.DB) (*[]Location, error) {
 }
 
 func (dc *Location) FindLocationByID(db *gorm.DB, uid uint32) (*Location, error) {
-	err := db.Debug().Model(Location{}).Where("id = ?", uid).Take(&dc).Error
+	err := db.Model(Location{}).Where("id = ?", uid).Take(&dc).Error
 	if err != nil {
 		return &Location{}, err
 	}
@@ -74,7 +74,7 @@ func (dc *Location) FindLocationByID(db *gorm.DB, uid uint32) (*Location, error)
 }
 
 func (dc *Location) UpdateALocation(db *gorm.DB, uid uint32) (*Location, error) {
-	db = db.Debug().Model(&Location{}).Where("id = ?", uid).Take(&Location{}).UpdateColumns(
+	db = db.Model(&Location{}).Where("id = ?", uid).Take(&Location{}).UpdateColumns(
 		map[string]interface{}{
 			"name":       dc.Name,
 			"address":    dc.Address,
@@ -87,7 +87,7 @@ func (dc *Location) UpdateALocation(db *gorm.DB, uid uint32) (*Location, error) 
 		return &Location{}, db.Error
 	}
 	// This is the display the updated user
-	err := db.Debug().Model(&Location{}).Where("id = ?", uid).Take(&dc).Error
+	err := db.Model(&Location{}).Where("id = ?", uid).Take(&dc).Error
 	if err != nil {
 		return &Location{}, err
 	}
@@ -95,7 +95,7 @@ func (dc *Location) UpdateALocation(db *gorm.DB, uid uint32) (*Location, error) 
 }
 
 func (dc *Location) DeleteALocation(db *gorm.DB, uid uint32) (int64, error) {
-	db = db.Debug().Model(&Location{}).Where("id = ?", uid).Take(&Location{}).Delete(&Location{})
+	db = db.Model(&Location{}).Where("id = ?", uid).Take(&Location{}).Delete(&Location{})
 
 	if db.Error != nil {
 		return 0, db.Error

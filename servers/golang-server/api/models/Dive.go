@@ -44,12 +44,12 @@ func (d *Dive) Validate() error {
 }
 
 func (d *Dive) SaveDive(db *gorm.DB) (*Dive, error) {
-	err := db.Debug().Model(&Dive{}).Create(&d).Error
+	err := db.Model(&Dive{}).Create(&d).Error
 	if err != nil {
 		return &Dive{}, err
 	}
 	if d.ID != 0 {
-		err = db.Debug().Model(&User{}).Where("id = ?", d.DiverID).Take(&d.Diver).Error
+		err = db.Model(&User{}).Where("id = ?", d.DiverID).Take(&d.Diver).Error
 		if err != nil {
 			return &Dive{}, err
 		}
@@ -59,13 +59,13 @@ func (d *Dive) SaveDive(db *gorm.DB) (*Dive, error) {
 
 func (d *Dive) FindAllDives(db *gorm.DB) (*[]Dive, error) {
 	dives := []Dive{}
-	err := db.Debug().Model(&Dive{}).Limit(1000).Find(&dives).Error
+	err := db.Model(&Dive{}).Limit(1000).Find(&dives).Error
 	if err != nil {
 		return &[]Dive{}, err
 	}
 	if len(dives) > 0 {
 		for i := range dives {
-			err := db.Debug().Model(&User{}).Where("id = ?", dives[i].DiverID).Take(&dives[i].Diver).Error
+			err := db.Model(&User{}).Where("id = ?", dives[i].DiverID).Take(&dives[i].Diver).Error
 			if err != nil {
 				return &[]Dive{}, err
 			}
@@ -75,12 +75,12 @@ func (d *Dive) FindAllDives(db *gorm.DB) (*[]Dive, error) {
 }
 
 func (d *Dive) FindDiveByID(db *gorm.DB, pid uint64) (*Dive, error) {
-	err := db.Debug().Model(&Dive{}).Where("id = ?", pid).Take(&d).Error
+	err := db.Model(&Dive{}).Where("id = ?", pid).Take(&d).Error
 	if err != nil {
 		return &Dive{}, err
 	}
 	if d.ID != 0 {
-		err = db.Debug().Model(&User{}).Where("id = ?", d.DiverID).Take(&d.Diver).Error
+		err = db.Model(&User{}).Where("id = ?", d.DiverID).Take(&d.Diver).Error
 		if err != nil {
 			return &Dive{}, err
 		}
@@ -89,12 +89,12 @@ func (d *Dive) FindDiveByID(db *gorm.DB, pid uint64) (*Dive, error) {
 }
 
 func (d *Dive) UpdateADive(db *gorm.DB) (*Dive, error) {
-	err := db.Debug().Model(&Dive{}).Where("id = ?", d.ID).Updates(Dive{Title: d.Title, UpdatedAt: time.Now()}).Error
+	err := db.Model(&Dive{}).Where("id = ?", d.ID).Updates(Dive{Title: d.Title, UpdatedAt: time.Now()}).Error
 	if err != nil {
 		return &Dive{}, err
 	}
 	if d.ID != 0 {
-		err = db.Debug().Model(&User{}).Where("id = ?", d.DiverID).Take(&d.Diver).Error
+		err = db.Model(&User{}).Where("id = ?", d.DiverID).Take(&d.Diver).Error
 		if err != nil {
 			return &Dive{}, err
 		}
@@ -104,7 +104,7 @@ func (d *Dive) UpdateADive(db *gorm.DB) (*Dive, error) {
 
 func (d *Dive) DeleteADive(db *gorm.DB, pid uint64, uid uint64) (int64, error) {
 
-	db = db.Debug().Model(&Dive{}).Where("id = ? and diver_id = ?", pid, uid).Take(&Dive{}).Delete(&Dive{})
+	db = db.Model(&Dive{}).Where("id = ? and diver_id = ?", pid, uid).Take(&Dive{}).Delete(&Dive{})
 
 	if db.Error != nil {
 		if gorm.IsRecordNotFoundError(db.Error) {

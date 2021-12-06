@@ -38,7 +38,7 @@ func (dc *CompetitionParticipant) Validate(action string) error {
 }
 
 func (dc *CompetitionParticipant) SaveCompetitionParticipant(db *gorm.DB) (*CompetitionParticipant, error) {
-	err := db.Debug().Create(&dc).Error
+	err := db.Create(&dc).Error
 	if err != nil {
 		return &CompetitionParticipant{}, err
 	}
@@ -47,7 +47,7 @@ func (dc *CompetitionParticipant) SaveCompetitionParticipant(db *gorm.DB) (*Comp
 
 func (dc *CompetitionParticipant) FindAllCompetitionParticipants(db *gorm.DB) (*[]CompetitionParticipant, error) {
 	ret := []CompetitionParticipant{}
-	err := db.Debug().Model(&CompetitionParticipant{}).Limit(1000).Find(&ret).Error
+	err := db.Model(&CompetitionParticipant{}).Limit(1000).Find(&ret).Error
 	if err != nil {
 		return &[]CompetitionParticipant{}, err
 	}
@@ -55,7 +55,7 @@ func (dc *CompetitionParticipant) FindAllCompetitionParticipants(db *gorm.DB) (*
 }
 
 func (dc *CompetitionParticipant) FindCompetitionParticipantByID(db *gorm.DB, uid uint32) (*CompetitionParticipant, error) {
-	err := db.Debug().Model(CompetitionParticipant{}).Where("id = ?", uid).Take(&dc).Error
+	err := db.Model(CompetitionParticipant{}).Where("id = ?", uid).Take(&dc).Error
 	if err != nil {
 		return &CompetitionParticipant{}, err
 	}
@@ -66,7 +66,7 @@ func (dc *CompetitionParticipant) FindCompetitionParticipantByID(db *gorm.DB, ui
 }
 
 func (dc *CompetitionParticipant) UpdateACompetitionParticipant(db *gorm.DB, uid uint32) (*CompetitionParticipant, error) {
-	db = db.Debug().Model(&CompetitionParticipant{}).Where("id = ?", uid).Take(&CompetitionParticipant{}).UpdateColumns(
+	db = db.Model(&CompetitionParticipant{}).Where("id = ?", uid).Take(&CompetitionParticipant{}).UpdateColumns(
 		map[string]interface{}{
 			"comment":    dc.Comment,
 			"updated_at": time.Now(),
@@ -76,7 +76,7 @@ func (dc *CompetitionParticipant) UpdateACompetitionParticipant(db *gorm.DB, uid
 		return &CompetitionParticipant{}, db.Error
 	}
 	// This is the display the updated user
-	err := db.Debug().Model(&CompetitionParticipant{}).Where("id = ?", uid).Take(&dc).Error
+	err := db.Model(&CompetitionParticipant{}).Where("id = ?", uid).Take(&dc).Error
 	if err != nil {
 		return &CompetitionParticipant{}, err
 	}
@@ -84,7 +84,7 @@ func (dc *CompetitionParticipant) UpdateACompetitionParticipant(db *gorm.DB, uid
 }
 
 func (dc *CompetitionParticipant) DeleteACompetitionParticipant(db *gorm.DB, uid uint32) (int64, error) {
-	db = db.Debug().Model(&CompetitionParticipant{}).Where("id = ?", uid).Take(&CompetitionParticipant{}).Delete(&CompetitionParticipant{})
+	db = db.Model(&CompetitionParticipant{}).Where("id = ?", uid).Take(&CompetitionParticipant{}).Delete(&CompetitionParticipant{})
 
 	if db.Error != nil {
 		return 0, db.Error

@@ -78,14 +78,6 @@ func TestUpdateAUser(t *testing.T) {
 		log.Fatalf("Cannot seed user: %v\n", err)
 	}
 
-	/*
-		ID:        1,
-		Email:     "andrea@bergesen.info",
-		Password:  "password",
-		FirstName: "Andrea",
-		LastName:  "Bergesen",
-	*/
-
 	userUpdate := models.User{
 		ID:    1,
 		Email: "modiupdate@gmail.com",

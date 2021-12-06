@@ -67,7 +67,7 @@ func (dc *DiveClub) SaveDiveClub(db *gorm.DB) (*DiveClub, error) {
 
 func (dc *DiveClub) FindAllDiveClubs(db *gorm.DB) (*[]DiveClub, error) {
 	ret := []DiveClub{}
-	err := db.Debug().Model(&DiveClub{}).Limit(1000).Find(&ret).Error
+	err := db.Model(&DiveClub{}).Limit(1000).Find(&ret).Error
 	if err != nil {
 		return &[]DiveClub{}, err
 	}
@@ -75,7 +75,7 @@ func (dc *DiveClub) FindAllDiveClubs(db *gorm.DB) (*[]DiveClub, error) {
 }
 
 func (dc *DiveClub) FindDiveClubByID(db *gorm.DB, uid uint32) (*DiveClub, error) {
-	err := db.Debug().Model(DiveClub{}).Where("id = ?", uid).Take(&dc).Error
+	err := db.Model(DiveClub{}).Where("id = ?", uid).Take(&dc).Error
 	if err != nil {
 		return &DiveClub{}, err
 	}
@@ -87,7 +87,7 @@ func (dc *DiveClub) FindDiveClubByID(db *gorm.DB, uid uint32) (*DiveClub, error)
 
 func (dc *DiveClub) UpdateADiveClub(db *gorm.DB, uid uint32) (*DiveClub, error) {
 	// To hash the password
-	db = db.Debug().Model(&DiveClub{}).Where("id = ?", uid).Take(&DiveClub{}).UpdateColumns(
+	db = db.Model(&DiveClub{}).Where("id = ?", uid).Take(&DiveClub{}).UpdateColumns(
 		map[string]interface{}{
 			"name":       dc.Name,
 			"email":      dc.Email,
@@ -98,7 +98,7 @@ func (dc *DiveClub) UpdateADiveClub(db *gorm.DB, uid uint32) (*DiveClub, error) 
 		return &DiveClub{}, db.Error
 	}
 	// This is the display the updated user
-	err := db.Debug().Model(&DiveClub{}).Where("id = ?", uid).Take(&dc).Error
+	err := db.Model(&DiveClub{}).Where("id = ?", uid).Take(&dc).Error
 	if err != nil {
 		return &DiveClub{}, err
 	}
@@ -106,7 +106,7 @@ func (dc *DiveClub) UpdateADiveClub(db *gorm.DB, uid uint32) (*DiveClub, error) 
 }
 
 func (dc *DiveClub) DeleteADiveClub(db *gorm.DB, uid uint32) (int64, error) {
-	db = db.Debug().Model(&DiveClub{}).Where("id = ?", uid).Take(&DiveClub{}).Delete(&DiveClub{})
+	db = db.Model(&DiveClub{}).Where("id = ?", uid).Take(&DiveClub{}).Delete(&DiveClub{})
 
 	if db.Error != nil {
 		return 0, db.Error

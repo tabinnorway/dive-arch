@@ -35,7 +35,7 @@ func (p *Competition) Validate() error {
 }
 
 func (p *Competition) SaveCompetition(db *gorm.DB) (*Competition, error) {
-	err := db.Debug().Model(&Competition{}).Create(&p).Error
+	err := db.Model(&Competition{}).Create(&p).Error
 	if err != nil {
 		return &Competition{}, err
 	}
@@ -44,7 +44,7 @@ func (p *Competition) SaveCompetition(db *gorm.DB) (*Competition, error) {
 
 func (p *Competition) FindAllCompetitions(db *gorm.DB) (*[]Competition, error) {
 	ret := []Competition{}
-	err := db.Debug().Model(&Competition{}).Limit(1000).Find(&ret).Error
+	err := db.Model(&Competition{}).Limit(1000).Find(&ret).Error
 	if err != nil {
 		return &[]Competition{}, err
 	}
@@ -52,7 +52,7 @@ func (p *Competition) FindAllCompetitions(db *gorm.DB) (*[]Competition, error) {
 }
 
 func (c *Competition) FindCompetitionByID(db *gorm.DB, pid uint64) (*Competition, error) {
-	err := db.Debug().Model(&Competition{}).Where("id = ?", pid).Take(&c).Error
+	err := db.Model(&Competition{}).Where("id = ?", pid).Take(&c).Error
 	if err != nil {
 		return &Competition{}, err
 	}
@@ -60,7 +60,7 @@ func (c *Competition) FindCompetitionByID(db *gorm.DB, pid uint64) (*Competition
 }
 
 func (c *Competition) UpdateACompetition(db *gorm.DB) (*Competition, error) {
-	err := db.Debug().Model(&Competition{}).Where("id = ?", c.ID).Updates(Competition{Title: c.Title, UpdatedAt: time.Now()}).Error
+	err := db.Model(&Competition{}).Where("id = ?", c.ID).Updates(Competition{Title: c.Title, UpdatedAt: time.Now()}).Error
 	if err != nil {
 		return &Competition{}, err
 	}
@@ -69,7 +69,7 @@ func (c *Competition) UpdateACompetition(db *gorm.DB) (*Competition, error) {
 
 func (p *Competition) DeleteACompetition(db *gorm.DB, pid uint64, uid uint32) (int64, error) {
 
-	db = db.Debug().Model(&Competition{}).Where("id = ? and diver_id = ?", pid, uid).Take(&Competition{}).Delete(&Competition{})
+	db = db.Model(&Competition{}).Where("id = ? and diver_id = ?", pid, uid).Take(&Competition{}).Delete(&Competition{})
 
 	if db.Error != nil {
 		if gorm.IsRecordNotFoundError(db.Error) {

@@ -107,7 +107,7 @@ var dives = []models.Dive{
 }
 
 func Load(db *gorm.DB) {
-	err := db.Debug().DropTableIfExists(
+	err := db.DropTableIfExists(
 		&models.Dive{},
 		&models.User{},
 		models.DiveClub{},
@@ -118,7 +118,7 @@ func Load(db *gorm.DB) {
 		log.Fatalf("cannot drop table: %v", err)
 	}
 
-	err = db.Debug().AutoMigrate(
+	err = db.AutoMigrate(
 		models.Location{},
 		models.Competition{},
 		&models.User{},
@@ -129,47 +129,47 @@ func Load(db *gorm.DB) {
 		log.Fatalf("cannot migrate table: %v", err)
 	}
 
-	err = db.Debug().Model(&models.Dive{}).AddForeignKey("diver_id", "users(id)", "cascade", "cascade").Error
+	err = db.Model(&models.Dive{}).AddForeignKey("diver_id", "users(id)", "cascade", "cascade").Error
 	if err != nil {
 		log.Fatalf("attaching foreign key dive/user error: %v", err)
 	}
-	err = db.Debug().Model(&models.User{}).AddForeignKey("dive_club_id", "dive_clubs(id)", "cascade", "cascade").Error
+	err = db.Model(&models.User{}).AddForeignKey("dive_club_id", "dive_clubs(id)", "cascade", "cascade").Error
 	if err != nil {
 		log.Fatalf("attaching foreign key dive/user error: %v", err)
 	}
-	err = db.Debug().Model(&models.Competition{}).AddForeignKey("location_id", "locations(id)", "cascade", "cascade").Error
+	err = db.Model(&models.Competition{}).AddForeignKey("location_id", "locations(id)", "cascade", "cascade").Error
 	if err != nil {
 		log.Fatalf("attaching foreign key dive/user error: %v", err)
 	}
 
 	for locId := range locations {
-		err = db.Debug().Model(&models.Location{}).Create(&locations[locId]).Error
+		err = db.Model(&models.Location{}).Create(&locations[locId]).Error
 		if err != nil {
 			log.Fatalf("cannot seed locations table: %v", err)
 		}
 	}
 
 	for compId := range competitions {
-		err = db.Debug().Model(&models.Competition{}).Create(&competitions[compId]).Error
+		err = db.Model(&models.Competition{}).Create(&competitions[compId]).Error
 		if err != nil {
 			log.Fatalf("cannot seed competitions table: %v", err)
 		}
 	}
 
 	for clubId := range diveClubs {
-		err = db.Debug().Model(&models.DiveClub{}).Create(&diveClubs[clubId]).Error
+		err = db.Model(&models.DiveClub{}).Create(&diveClubs[clubId]).Error
 		if err != nil {
 			log.Fatalf("cannot seed diveclubs table: %v", err)
 		}
 	}
 	for userId := range users {
-		err = db.Debug().Model(&models.User{}).Create(&users[userId]).Error
+		err = db.Model(&models.User{}).Create(&users[userId]).Error
 		if err != nil {
 			log.Fatalf("cannot seed users table: %v", err)
 		}
 	}
 	for diveId := range dives {
-		err = db.Debug().Model(&models.Dive{}).Create(&dives[diveId]).Error
+		err = db.Model(&models.Dive{}).Create(&dives[diveId]).Error
 		if err != nil {
 			log.Fatalf("cannot seed dives table: %v", err)
 		}

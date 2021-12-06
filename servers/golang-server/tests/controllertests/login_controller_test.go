@@ -47,7 +47,6 @@ func TestSignIn(t *testing.T) {
 	}
 
 	for _, v := range samples {
-
 		token, err := server.SignIn(v.email, v.password)
 		if err != nil {
 			assert.Equal(t, err, errors.New(v.errorMessage))
@@ -110,7 +109,6 @@ func TestLogin(t *testing.T) {
 	}
 
 	for _, v := range samples {
-
 		req, err := http.NewRequest("POST", "/login", bytes.NewBufferString(v.inputJSON))
 		if err != nil {
 			t.Errorf("this is the error: %v", err)

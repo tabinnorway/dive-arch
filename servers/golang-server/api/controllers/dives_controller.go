@@ -99,9 +99,9 @@ func (server *Server) UpdateDive(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Check if the post exist
+	// Check if the dive exist
 	dive := models.Dive{}
-	err = server.DB.Debug().Model(models.Dive{}).Where("id = ?", pid).Take(&dive).Error
+	err = server.DB.Model(models.Dive{}).Where("id = ?", pid).Take(&dive).Error
 	if err != nil {
 		responses.ERROR(w, http.StatusNotFound, errors.New("dive not found"))
 		return
@@ -171,7 +171,7 @@ func (server *Server) DeleteDive(w http.ResponseWriter, r *http.Request) {
 
 	// Check if the post exist
 	post := models.Dive{}
-	err = server.DB.Debug().Model(models.Dive{}).Where("id = ?", pid).Take(&post).Error
+	err = server.DB.Model(models.Dive{}).Where("id = ?", pid).Take(&post).Error
 	if err != nil {
 		responses.ERROR(w, http.StatusNotFound, errors.New("Unauthorized"))
 		return

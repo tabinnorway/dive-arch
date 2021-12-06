@@ -98,7 +98,7 @@ func (u *User) Validate(action string) error {
 
 func (u *User) SaveUser(db *gorm.DB) (*User, error) {
 
-	err := db.Debug().Create(&u).Error
+	err := db.Create(&u).Error
 	if err != nil {
 		return &User{}, err
 	}
@@ -107,7 +107,7 @@ func (u *User) SaveUser(db *gorm.DB) (*User, error) {
 
 func (u *User) FindAllUsers(db *gorm.DB) (*[]User, error) {
 	users := []User{}
-	err := db.Debug().Model(&User{}).Limit(1000).Find(&users).Error
+	err := db.Model(&User{}).Limit(1000).Find(&users).Error
 	if err != nil {
 		return &[]User{}, err
 	}
@@ -115,14 +115,14 @@ func (u *User) FindAllUsers(db *gorm.DB) (*[]User, error) {
 }
 
 func (u *User) FindUserByID(db *gorm.DB, uid uint64) (*User, error) {
-	err := db.Debug().Model(User{}).Where("id = ?", uid).Take(&u).Error
+	err := db.Model(User{}).Where("id = ?", uid).Take(&u).Error
 	if err != nil {
 		return &User{}, err
 	}
 	if gorm.IsRecordNotFoundError(err) {
 		return &User{}, errors.New("User Not Found")
 	}
-	db.Debug().Model(DiveClub{}).Where("id = ?", u.DiveClubID).Take(&u.DiveClub)
+	db.Model(DiveClub{}).Where("id = ?", u.DiveClubID).Take(&u.DiveClub)
 	return u, err
 }
 
@@ -133,7 +133,7 @@ func (u *User) UpdateAUser(db *gorm.DB, uid uint64) (*User, error) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	db = db.Debug().Model(&User{}).Where("id = ?", uid).Take(&User{}).UpdateColumns(
+	db = db.Model(&User{}).Where("id = ?", uid).Take(&User{}).UpdateColumns(
 		map[string]interface{}{
 			"password":   u.Password,
 			"first_name": u.FirstName,
@@ -146,7 +146,7 @@ func (u *User) UpdateAUser(db *gorm.DB, uid uint64) (*User, error) {
 		return &User{}, db.Error
 	}
 	// This is the display the updated user
-	err = db.Debug().Model(&User{}).Where("id = ?", uid).Take(&u).Error
+	err = db.Model(&User{}).Where("id = ?", uid).Take(&u).Error
 	if err != nil {
 		return &User{}, err
 	}
@@ -154,7 +154,7 @@ func (u *User) UpdateAUser(db *gorm.DB, uid uint64) (*User, error) {
 }
 
 func (u *User) DeleteAUser(db *gorm.DB, uid uint64) (int64, error) {
-	db = db.Debug().Model(&User{}).Where("id = ?", uid).Take(&User{}).Delete(&User{})
+	db = db.Model(&User{}).Where("id = ?", uid).Take(&User{}).Delete(&User{})
 
 	if db.Error != nil {
 		return 0, db.Error
