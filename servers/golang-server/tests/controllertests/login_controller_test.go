@@ -58,7 +58,6 @@ func TestSignIn(t *testing.T) {
 }
 
 func TestLogin(t *testing.T) {
-
 	refreshUserTable()
 
 	_, err := seedOneUser()

@@ -14,6 +14,7 @@ type Competition struct {
 	Title      string    `gorm:"size:255;not null;unique" json:"title"`
 	Location   Location  `json:"location"`
 	LocationId uint64    `gorm:"not null" json:"location_id"`
+	DivecalcId string    `json:"divecalc_id"`
 	StartDate  time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"start_date"`
 	EndDate    time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"end_date"`
 	CreatedAt  time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`

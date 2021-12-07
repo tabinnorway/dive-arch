@@ -30,6 +30,7 @@ var competitions = []models.Competition{
 		Title:      "Tripp Trapp 3",
 		StartDate:  time.Date(2021, 9, 11, 10, 0, 0, 0, time.Local),
 		EndDate:    time.Date(2021, 9, 12, 10, 0, 0, 0, time.Local),
+		DivecalcId: "tt3ssc",
 	},
 	{
 		ID:         2,
@@ -37,6 +38,7 @@ var competitions = []models.Competition{
 		Title:      "Tripp Trapp 4",
 		StartDate:  time.Date(2021, 11, 11, 10, 0, 0, 0, time.Local),
 		EndDate:    time.Date(2021, 11, 12, 10, 0, 0, 0, time.Local),
+		DivecalcId: "",
 	},
 	{
 		ID:         3,
@@ -108,6 +110,7 @@ var dives = []models.Dive{
 
 func Load(db *gorm.DB) {
 	err := db.DropTableIfExists(
+		models.CompetitionParticipant{},
 		&models.Dive{},
 		&models.User{},
 		models.DiveClub{},
@@ -123,6 +126,7 @@ func Load(db *gorm.DB) {
 		models.Competition{},
 		&models.User{},
 		&models.Dive{},
+		models.CompetitionParticipant{},
 		models.DiveClub{},
 	).Error
 	if err != nil {
@@ -138,6 +142,14 @@ func Load(db *gorm.DB) {
 		log.Fatalf("attaching foreign key dive/user error: %v", err)
 	}
 	err = db.Model(&models.Competition{}).AddForeignKey("location_id", "locations(id)", "cascade", "cascade").Error
+	if err != nil {
+		log.Fatalf("attaching foreign key dive/user error: %v", err)
+	}
+	err = db.Model(&models.CompetitionParticipant{}).AddForeignKey("diver_id", "users(id)", "cascade", "cascade").Error
+	if err != nil {
+		log.Fatalf("attaching foreign key dive/user error: %v", err)
+	}
+	err = db.Model(&models.CompetitionParticipant{}).AddForeignKey("competition_id", "competitions(id)", "cascade", "cascade").Error
 	if err != nil {
 		log.Fatalf("attaching foreign key dive/user error: %v", err)
 	}

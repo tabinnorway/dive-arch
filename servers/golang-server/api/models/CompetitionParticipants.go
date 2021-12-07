@@ -10,14 +10,14 @@ import (
 )
 
 type CompetitionParticipant struct {
-	ID         uint64    `gorm:"primary_key;auto_increment" json:"id"`
-	Diver      User      `json:"diver"`
-	DiverID    uint64    `gorm:"not null" json:"diver_id"`
-	Location   Location  `json:"location"`
-	LocationID uint64    `gorm:"not null" json:"location_id"`
-	Comment    string    `gorm:"size:1024" json:"name"`
-	CreatedAt  time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt  time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
+	ID            uint64      `gorm:"primary_key;auto_increment" json:"id"`
+	Diver         User        `json:"diver"`
+	DiverID       uint64      `gorm:"not null" json:"diver_id"`
+	Competition   Competition `json:"competition"`
+	CompetitionID uint64      `gorm:"not null" json:"competition_id"`
+	Comment       string      `gorm:"size:1024" json:"name"`
+	CreatedAt     time.Time   `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
+	UpdatedAt     time.Time   `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
 }
 
 func (dc *CompetitionParticipant) Prepare() {
@@ -31,7 +31,6 @@ func (dc *CompetitionParticipant) Validate(action string) error {
 	switch strings.ToLower(action) {
 	case "update":
 		return nil
-
 	default:
 		return nil
 	}
@@ -75,7 +74,7 @@ func (dc *CompetitionParticipant) UpdateACompetitionParticipant(db *gorm.DB, uid
 	if db.Error != nil {
 		return &CompetitionParticipant{}, db.Error
 	}
-	// This is the display the updated user
+
 	err := db.Model(&CompetitionParticipant{}).Where("id = ?", uid).Take(&dc).Error
 	if err != nil {
 		return &CompetitionParticipant{}, err
