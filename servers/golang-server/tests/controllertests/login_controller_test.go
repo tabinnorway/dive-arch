@@ -47,6 +47,7 @@ func TestSignIn(t *testing.T) {
 	}
 
 	for _, v := range samples {
+		fmt.Printf("Going to test %s, %s\n", v.email, v.password)
 		token, err := server.SignIn(v.email, v.password)
 		if err != nil {
 			assert.Equal(t, err, errors.New(v.errorMessage))
@@ -79,32 +80,32 @@ func TestLogin(t *testing.T) {
 		{
 			inputJSON:    `{"email": "pet@gmail.com", "password": "wrong password"}`,
 			statusCode:   422,
-			errorMessage: "Incorrect Password",
+			errorMessage: "incorrect username/password combination",
 		},
 		{
 			inputJSON:    `{"email": "frank@gmail.com", "password": "password"}`,
 			statusCode:   422,
-			errorMessage: "Incorrect Details",
+			errorMessage: "incorrect details",
 		},
 		{
 			inputJSON:    `{"email": "kangmail.com", "password": "password"}`,
 			statusCode:   422,
-			errorMessage: "Invalid Email",
+			errorMessage: "invalid email",
 		},
 		{
 			inputJSON:    `{"email": "", "password": "password"}`,
 			statusCode:   422,
-			errorMessage: "Required Email",
+			errorMessage: "required email",
 		},
 		{
 			inputJSON:    `{"email": "kan@gmail.com", "password": ""}`,
 			statusCode:   422,
-			errorMessage: "Required Password",
+			errorMessage: "required password",
 		},
 		{
 			inputJSON:    `{"email": "", "password": "password"}`,
 			statusCode:   422,
-			errorMessage: "Required Email",
+			errorMessage: "required email",
 		},
 	}
 

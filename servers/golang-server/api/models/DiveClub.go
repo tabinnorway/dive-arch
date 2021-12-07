@@ -58,7 +58,7 @@ func (dc *DiveClub) Validate(action string) error {
 
 func (dc *DiveClub) SaveDiveClub(db *gorm.DB) (*DiveClub, error) {
 
-	err := db.Debug().Create(&dc).Error
+	err := db.Create(&dc).Error
 	if err != nil {
 		return &DiveClub{}, err
 	}

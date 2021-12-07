@@ -60,11 +60,14 @@ func refreshUserTable() error {
 	}
 	err = server.DB.AutoMigrate(
 		models.Location{},
+		models.DiveClub{},
 		models.Competition{},
 		&models.User{},
 		&models.Dive{},
-		models.DiveClub{},
 	).Error
+	if err != nil {
+		return err
+	}
 	log.Printf("Successfully refreshed table")
 	return nil
 }

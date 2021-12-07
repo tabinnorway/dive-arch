@@ -46,7 +46,7 @@ func (dc *Location) Validate(action string) error {
 }
 
 func (dc *Location) SaveLocation(db *gorm.DB) (*Location, error) {
-	err := db.Debug().Create(&dc).Error
+	err := db.Create(&dc).Error
 	if err != nil {
 		return &Location{}, err
 	}
