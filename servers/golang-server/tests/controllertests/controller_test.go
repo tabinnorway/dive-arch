@@ -8,8 +8,8 @@ import (
 
 	"github.com/jinzhu/gorm"
 	"github.com/joho/godotenv"
-	"github.com/tabinnorway/golang-server/api/controllers"
-	"github.com/tabinnorway/golang-server/api/models"
+	"github.com/tabinnorway/dive-arch/golang-server/api/controllers"
+	"github.com/tabinnorway/dive-arch/golang-server/api/models"
 )
 
 var server = controllers.Server{}
@@ -28,11 +28,9 @@ func TestMain(m *testing.M) {
 }
 
 func Database() {
-
 	var err error
 
 	TestDbDriver := os.Getenv("TestDbDriver")
-
 	if TestDbDriver == "postgres" {
 		DBURL := fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s", os.Getenv("TestDbHost"), os.Getenv("TestDbPort"), os.Getenv("TestDbUser"), os.Getenv("TestDbName"), os.Getenv("TestDbPassword"))
 		server.DB, err = gorm.Open(TestDbDriver, DBURL)
@@ -50,10 +48,11 @@ func Database() {
 func refreshUserTable() error {
 	err := server.DB.DropTableIfExists(
 		&models.Dive{},
-		&models.User{},
-		models.DiveClub{},
+		models.CompetitionParticipant{},
 		models.Competition{},
 		models.Location{},
+		models.DiveClub{},
+		&models.User{},
 	).Error
 	if err != nil {
 		return err

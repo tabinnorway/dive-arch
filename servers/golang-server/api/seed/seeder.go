@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/jinzhu/gorm"
-	"github.com/tabinnorway/golang-server/api/models"
+	"github.com/tabinnorway/dive-arch/golang-server/api/models"
 )
 
 var locations = []models.Location{
@@ -122,12 +122,12 @@ func Load(db *gorm.DB) {
 	}
 
 	err = db.AutoMigrate(
+		models.DiveClub{},
 		models.Location{},
 		models.Competition{},
 		&models.User{},
 		&models.Dive{},
 		models.CompetitionParticipant{},
-		models.DiveClub{},
 	).Error
 	if err != nil {
 		log.Fatalf("cannot migrate table: %v", err)

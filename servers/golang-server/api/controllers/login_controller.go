@@ -5,10 +5,10 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/tabinnorway/golang-server/api/auth"
-	"github.com/tabinnorway/golang-server/api/models"
-	"github.com/tabinnorway/golang-server/api/responses"
-	"github.com/tabinnorway/golang-server/api/utils/formaterror"
+	"github.com/tabinnorway/dive-arch/golang-server/api/auth"
+	"github.com/tabinnorway/dive-arch/golang-server/api/models"
+	"github.com/tabinnorway/dive-arch/golang-server/api/responses"
+	"github.com/tabinnorway/dive-arch/golang-server/api/utils/formaterror"
 	"golang.org/x/crypto/bcrypt"
 )
 

@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	_ "github.com/jinzhu/gorm/dialects/postgres" //postgres driver
-	"github.com/tabinnorway/golang-server/api/models"
+	"github.com/tabinnorway/dive-arch/golang-server/api/models"
 	"gopkg.in/go-playground/assert.v1"
 )
 

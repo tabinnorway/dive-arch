@@ -1,4 +1,4 @@
-module github.com/tabinnorway/golang-server
+module github.com/tabinnorway/dive-arch/golang-server
 
 go 1.17
 

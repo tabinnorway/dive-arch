@@ -11,23 +11,9 @@ import (
 	"testing"
 
 	"github.com/gorilla/mux"
-	"github.com/tabinnorway/golang-server/api/models"
+	"github.com/tabinnorway/dive-arch/golang-server/api/models"
 	"gopkg.in/go-playground/assert.v1"
 )
-
-/****************************************************************
-type User struct {
-	ID         uint64    `gorm:"primary_key;auto_increment" json:"id"`
-	Email      string    `gorm:"size:100;not null;unique" json:"email"`
-	Password   string    `gorm:"size:100;not null;" json:"password"`
-	FirstName  string    `gorm:"size:100;not null;" json:"firstname"`
-	LastName   string    `gorm:"size:100;not null;" json:"lastname"`
-	DiveClub   DiveClub  `json:"diveclub"`
-	DiveClubID uint64    `gorm:"not null" json:"diveclub_id"`
-	CreatedAt  time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt  time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
-}
- ****************************************************************/
 
 func TestCreateUser(t *testing.T) {
 	err := refreshUserTable()
@@ -94,7 +80,6 @@ func TestCreateUser(t *testing.T) {
 			assert.Equal(t, responseMap["email"], v.email)
 		}
 		if v.statusCode == 422 || v.statusCode == 500 && v.errorMessage != "" {
-			fmt.Printf("Gott error message: %s, expected %s\n", responseMap["error"], v.errorMessage)
 			assert.Equal(t, responseMap["error"], v.errorMessage)
 		}
 	}
@@ -286,8 +271,6 @@ func TestUpdateUser(t *testing.T) {
 	}
 
 	for _, v := range samples {
-		fmt.Printf("Testing %s\n", v.updateJSON)
-
 		req, err := http.NewRequest("POST", "/users", bytes.NewBufferString(v.updateJSON))
 		if err != nil {
 			t.Errorf("This is the error: %v\n", err)

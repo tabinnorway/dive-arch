@@ -115,4 +115,4 @@ dive_model_test.go:27 1 does not equal 2
 --- PASS: TestDeleteAUser (0.19s)
 FAIL
 exit status 1
-FAIL	github.com/tabinnorway/golang-server/tests/modeltests	1.981s
+FAIL	github.com/tabinnorway/dive-arch/golang-server/tests/modeltests	1.981s
