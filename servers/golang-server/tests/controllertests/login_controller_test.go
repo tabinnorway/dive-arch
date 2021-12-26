@@ -125,7 +125,6 @@ func TestLogin(t *testing.T) {
 		if v.statusCode == 422 && v.errorMessage != "" {
 			responseMap := make(map[string]interface{})
 			err = json.Unmarshal(rr.Body.Bytes(), &responseMap)
-			// err = json.Unmarshal([]byte(rr.Body.String()), &responseMap)
 			if err != nil {
 				t.Errorf("Cannot convert to json: %v", err)
 			}

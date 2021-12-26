@@ -16,7 +16,6 @@ import (
 )
 
 func (server *Server) CreateDive(w http.ResponseWriter, r *http.Request) {
-
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		responses.ERROR(w, http.StatusUnprocessableEntity, err)

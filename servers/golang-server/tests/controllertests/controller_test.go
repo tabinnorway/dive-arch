@@ -13,8 +13,6 @@ import (
 )
 
 var server = controllers.Server{}
-var userInstance = models.User{}
-var postInstance = models.Dive{}
 
 func TestMain(m *testing.M) {
 	err := godotenv.Load(os.ExpandEnv("../../.env"))

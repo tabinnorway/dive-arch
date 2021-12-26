@@ -94,7 +94,7 @@ func TestGetUsers(t *testing.T) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	req, err := http.NewRequest("GET", "/users", nil)
+	req, err := http.NewRequest("GET", "/api/users", nil)
 	if err != nil {
 		t.Errorf("this is the error: %v\n", err)
 	}
@@ -139,7 +139,7 @@ func TestGetUserByID(t *testing.T) {
 	}
 	for _, v := range userSample {
 
-		req, err := http.NewRequest("GET", "/users", nil)
+		req, err := http.NewRequest("GET", "/api/users", nil)
 		if err != nil {
 			t.Errorf("This is the error: %v\n", err)
 		}
@@ -271,7 +271,7 @@ func TestUpdateUser(t *testing.T) {
 	}
 
 	for _, v := range samples {
-		req, err := http.NewRequest("POST", "/users", bytes.NewBufferString(v.updateJSON))
+		req, err := http.NewRequest("POST", "/api/users", bytes.NewBufferString(v.updateJSON))
 		if err != nil {
 			t.Errorf("This is the error: %v\n", err)
 		}
@@ -370,8 +370,7 @@ func TestDeleteUser(t *testing.T) {
 		},
 	}
 	for _, v := range userSample {
-
-		req, err := http.NewRequest("GET", "/users", nil)
+		req, err := http.NewRequest("GET", "/api/users", nil)
 		if err != nil {
 			t.Errorf("This is the error: %v\n", err)
 		}
